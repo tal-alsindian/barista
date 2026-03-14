@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* جميع الأنماط مطابقة تماماً لـ cash.html (الألوان الخضراء) */
+        /* جميع الأنماط مطابقة تماماً مع إضافة زر الخروج في الأعلى */
         :root {
             --forest-green-light: #3f8b3a;
             --forest-green-bright: #5cb85c;
@@ -80,7 +80,25 @@
             box-shadow: inset 0 0 150px rgba(255, 255, 255, 0.3);
         }
 
-        .startup-logo {
+        /* شاشة تسجيل الدخول */
+        .login-screen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(145deg, #1f441a, var(--forest-green));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            backdrop-filter: blur(4px);
+            padding: 16px;
+            transition: opacity 0.4s;
+        }
+        .login-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .login-logo {
             width: clamp(120px, 40vw, 170px);
             height: clamp(120px, 40vw, 170px);
             background: var(--black-soft);
@@ -91,20 +109,69 @@
             margin-bottom: 20px;
             border: 5px solid var(--green-bright);
             box-shadow: 0 25px 45px -10px rgba(0,0,0,0.9), 0 0 0 2px var(--green-rich) inset, 0 0 0 10px rgba(76,175,80,0.2);
-            animation: gentlePulse 2.5s infinite alternate;
             overflow: hidden;
         }
-
-        .startup-logo img {
+        .login-logo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
         }
-
-        @keyframes gentlePulse {
-            0% { transform: scale(1); box-shadow: 0 25px 45px -10px rgba(0,0,0,0.9), 0 0 0 2px var(--green-rich) inset, 0 0 0 5px rgba(76,175,80,0.2); }
-            100% { transform: scale(1.02); box-shadow: 0 25px 45px -10px rgba(0,0,0,0.9), 0 0 0 2px var(--green-rich) inset, 0 0 0 15px rgba(76,175,80,0.1); }
+        .login-title {
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            font-weight: 900;
+            color: var(--cream-white);
+            margin-bottom: 30px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .login-form {
+            background: var(--cream-white);
+            padding: 30px 25px;
+            border-radius: 50px;
+            width: 100%;
+            max-width: 360px;
+            border: 4px solid var(--clay-brown);
+            box-shadow: var(--shadow-lg);
+        }
+        .input-field {
+            width: 100%;
+            padding: 14px 20px;
+            margin-bottom: 15px;
+            border: 2px solid var(--sandy-beige);
+            border-radius: 40px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: var(--forest-green);
+        }
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(145deg, var(--forest-green), #1f441a);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            cursor: pointer;
+            border: 2px solid var(--sandy-beige);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        .login-error {
+            color: #b33;
+            margin-top: 10px;
+            text-align: center;
+            font-weight: 700;
+            display: none;
         }
 
         .header-logo-frame {
@@ -126,69 +193,6 @@
             height: 100%;
             object-fit: cover;
             display: block;
-        }
-
-        #bg-pattern {
-            display: none;
-        }
-
-        #startup-screen {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(145deg, #1f441a, var(--forest-green));
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            transition: opacity 0.6s var(--transition-smooth);
-            backdrop-filter: blur(4px);
-            padding: 16px;
-        }
-
-        #startup-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .startup-title {
-            font-size: clamp(2rem, 8vw, 3rem);
-            font-weight: 900;
-            color: var(--cream-white);
-            margin-bottom: 15px;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            letter-spacing: 1px;
-            text-align: center;
-        }
-
-        .activate-btn {
-            background: var(--cream-white);
-            color: var(--forest-green);
-            border: none;
-            padding: 16px 32px;
-            font-size: 1.5rem;
-            font-weight: 900;
-            border-radius: 50px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border: 3px solid var(--sandy-beige);
-            box-shadow: var(--shadow-lg);
-            transition: all 0.3s;
-            width: auto;
-            max-width: 90%;
-            white-space: nowrap;
-        }
-
-        .activate-btn:hover {
-            transform: scale(1.02) translateY(-2px);
-            background: var(--sandy-beige);
-            box-shadow: 0 30px 50px rgba(0,0,0,0.4);
-        }
-
-        .activate-btn i {
-            font-size: 1.4rem;
         }
 
         #main-content {
@@ -262,9 +266,10 @@
 
         .controls {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             justify-content: center;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .control-btn {
@@ -282,13 +287,34 @@
             align-items: center;
             justify-content: center;
             box-shadow: var(--shadow-sm);
-            position: relative;
         }
 
         .control-btn:hover {
             transform: rotate(180deg) scale(1.05);
             background: var(--clay-brown);
             border-color: var(--cream-white);
+        }
+
+        .logout-header-btn {
+            background: var(--clay-brown);
+            color: white;
+            border: 2px solid var(--sandy-beige);
+            border-radius: 40px;
+            padding: 8px 16px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+            height: 48px;
+            white-space: nowrap;
+        }
+        .logout-header-btn:hover {
+            background: var(--forest-green);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
         .spinner {
@@ -900,6 +926,16 @@
             to { transform: translate(-50%, 0); opacity: 1; }
         }
 
+        @media (max-width: 480px) {
+            .controls {
+                gap: 4px;
+            }
+            .logout-header-btn {
+                padding: 8px 10px;
+                font-size: 0.8rem;
+            }
+        }
+
         @media (max-width: 380px) {
             .header-logo h1 {
                 font-size: 1.1rem;
@@ -923,17 +959,23 @@
 <body>
     <div id="animated-forest-bg"></div>
 
-    <div id="startup-screen">
-        <div class="startup-logo">
+    <!-- شاشة تسجيل الدخول -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-logo">
             <img src="https://iili.io/qfhk5Pt.png" alt="شعار تل السنديان">
         </div>
-        <div class="startup-title">☕ الباريستا</div>
-        <button id="activateBtn" class="activate-btn">
-            <i class="fas fa-mug-hot"></i>
-            تشغيل شاشة الباريستا
-        </button>
+        <div class="login-title">☕ الباريستا</div>
+        <div class="login-form">
+            <input type="text" id="loginUsername" class="input-field" placeholder="اسم المستخدم" autocomplete="off">
+            <input type="password" id="loginPassword" class="input-field" placeholder="كلمة المرور">
+            <button class="login-btn" id="loginBtn">
+                <i class="fas fa-sign-in-alt"></i> دخول
+            </button>
+            <div id="loginError" class="login-error">بيانات الدخول غير صحيحة</div>
+        </div>
     </div>
 
+    <!-- المحتوى الرئيسي (يظهر بعد تسجيل الدخول) -->
     <div id="main-content">
         <header class="kitchen-header">
             <div class="header-logo">
@@ -961,6 +1003,11 @@
                 <button class="control-btn" id="refreshBtn">
                     <i class="fas fa-sync-alt"></i>
                 </button>
+                <!-- زر تسجيل الخروج في الأعلى -->
+                <button class="logout-header-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span id="currentUserDisplay"></span>
+                </button>
             </div>
         </header>
 
@@ -980,6 +1027,7 @@
         <div id="ordersContainer" class="orders-grid"></div>
     </div>
 
+    <!-- نفس النوافذ المنبثقة السابقة -->
     <div id="popupOverlay" class="popup-overlay">
         <div class="order-popup">
             <div class="popup-header">
@@ -1044,35 +1092,42 @@
     </audio>
 
     <script>
-        // ======================== الإعدادات المحسنة (تحديث كل 5 ثوان) ========================
+        // ======================== الإعدادات المحسنة + نظام تسجيل الدخول والجلسات ========================
         const CONFIG = {
             API_URL: 'https://script.google.com/macros/s/AKfycbzU7pp0Ul8KNDT4iEd7kGFxNrXYzX4B4zfdYANjE59ABvMq1vIKlmEM4gAOipY47Zeoiw/exec',
-            MENU_API_URL: 'https://script.google.com/macros/s/AKfycbyf1LnxXlGpllpyNeO9Gez1ah-DUSaVfTk3KhPDV8lDtN_Zga1GMZDaM387o0XWhIIW/exec', // رابط القائمة الجديد
+            MENU_API_URL: 'https://script.google.com/macros/s/AKfycbyf1LnxXlGpllpyNeO9Gez1ah-DUSaVfTk3KhPDV8lDtN_Zga1GMZDaM387o0XWhIIW/exec',
             RESTAURANT: { name: 'تل السنديان', code: 'TSN' },
-            REFRESH_INTERVAL: 5000,               // 5 ثوانٍ
-            MAX_REFRESH_INTERVAL: 60000,           // دقيقة كحد أقصى عند الفشل
-            CLEANUP_INTERVAL: 24 * 60 * 60 * 1000, // مرة يومياً (24 ساعة)
-            OLD_DAYS_THRESHOLD: 7,                  // حذف المكتملة بعد 7 أيام
+            REFRESH_INTERVAL: 5000,
+            MAX_REFRESH_INTERVAL: 60000,
+            CLEANUP_INTERVAL: 24 * 60 * 60 * 1000,
+            OLD_DAYS_THRESHOLD: 7,
             FETCH_TIMEOUT: 8000,
             MAX_RETRIES: 3,
-            CACHE_KEY: 'barista_orders_backup',     // مفتاح مختلف عن الكاشير
+            CACHE_KEY: 'barista_orders_backup',
             BARISTA_CATEGORY_NAMES: [
                 'مشروبات ساخنة',
                 'مشروبات قهوة باردة',
                 'مشروبات باردة',
                 'موهيتو',
                 'سوفت درينك'
+            ],
+            // بيانات المستخدمين (2 مستخدمين)
+            USERS: [
+                { username: 'barista1', password: 'pass1' },
+                { username: 'barista2', password: 'pass2' }
             ]
         };
 
-        // ======================== قائمة الكلمات المفتاحية الديناميكية (سيتم ملؤها من القائمة) ========================
-        let BARISTA_KEYWORDS = []; // سيتم تعبئتها من API القائمة
+        let BARISTA_KEYWORDS = [];
 
-        // ======================== IndexedDB Wrapper ========================
+        // ======================== IndexedDB Wrapper (مضاف إليه مخزن الجلسات) ========================
         const DB = {
             name: 'TelAlSindianDB',
-            version: 1,
-            store: 'barista_orders',                // مخزن منفصل للباريستا
+            version: 2,  // زيادة الإصدار لإضافة store جديد
+            stores: {
+                barista_orders: 'barista_orders',
+                barista_sessions: 'barista_sessions'
+            },
             db: null,
 
             async init() {
@@ -1085,20 +1140,29 @@
                     };
                     request.onupgradeneeded = (event) => {
                         const db = event.target.result;
-                        if (!db.objectStoreNames.contains(this.store)) {
-                            const store = db.createObjectStore(this.store, { keyPath: 'orderId' });
+                        // مخزن الطلبات (الإصدار 1)
+                        if (!db.objectStoreNames.contains(this.stores.barista_orders)) {
+                            const store = db.createObjectStore(this.stores.barista_orders, { keyPath: 'orderId' });
                             store.createIndex('status', 'status', { unique: false });
                             store.createIndex('timestamp', 'timestamp', { unique: false });
                             store.createIndex('completedAt', 'completedAt', { unique: false });
+                        }
+                        // مخزن جلسات الباريستا (جديد)
+                        if (!db.objectStoreNames.contains(this.stores.barista_sessions)) {
+                            const sessionStore = db.createObjectStore(this.stores.barista_sessions, { keyPath: 'id', autoIncrement: true });
+                            sessionStore.createIndex('username', 'username', { unique: false });
+                            sessionStore.createIndex('loginTime', 'loginTime', { unique: false });
+                            sessionStore.createIndex('logoutTime', 'logoutTime', { unique: false });
                         }
                     };
                 });
             },
 
+            // دوال الطلبات (موجودة مسبقاً) - نضيف فقط اللازم
             async getAllOrders() {
                 return new Promise((resolve, reject) => {
-                    const tx = this.db.transaction(this.store, 'readonly');
-                    const store = tx.objectStore(this.store);
+                    const tx = this.db.transaction(this.stores.barista_orders, 'readonly');
+                    const store = tx.objectStore(this.stores.barista_orders);
                     const request = store.getAll();
                     request.onsuccess = () => resolve(request.result);
                     request.onerror = () => reject(request.error);
@@ -1106,8 +1170,8 @@
             },
 
             async putOrders(orders) {
-                const tx = this.db.transaction(this.store, 'readwrite');
-                const store = tx.objectStore(this.store);
+                const tx = this.db.transaction(this.stores.barista_orders, 'readwrite');
+                const store = tx.objectStore(this.stores.barista_orders);
                 for (const order of orders) {
                     store.put(order);
                 }
@@ -1115,8 +1179,8 @@
             },
 
             async deleteOrder(orderId) {
-                const tx = this.db.transaction(this.store, 'readwrite');
-                const store = tx.objectStore(this.store);
+                const tx = this.db.transaction(this.stores.barista_orders, 'readwrite');
+                const store = tx.objectStore(this.stores.barista_orders);
                 store.delete(orderId);
                 return tx.complete;
             },
@@ -1124,8 +1188,8 @@
             async clearOldOrders(days = 7) {
                 const cutoff = new Date();
                 cutoff.setDate(cutoff.getDate() - days);
-                const tx = this.db.transaction(this.store, 'readwrite');
-                const store = tx.objectStore(this.store);
+                const tx = this.db.transaction(this.stores.barista_orders, 'readwrite');
+                const store = tx.objectStore(this.stores.barista_orders);
                 const index = store.index('completedAt');
                 const range = IDBKeyRange.upperBound(cutoff.toISOString());
                 const request = index.openCursor(range);
@@ -1139,6 +1203,69 @@
                     }
                 };
                 return tx.complete;
+            },
+
+            // ========= دوال الجلسات =========
+            async addSession(session) {
+                return new Promise((resolve, reject) => {
+                    const tx = this.db.transaction(this.stores.barista_sessions, 'readwrite');
+                    const store = tx.objectStore(this.stores.barista_sessions);
+                    const request = store.add(session);
+                    request.onsuccess = () => resolve(request.result);
+                    request.onerror = () => reject(request.error);
+                });
+            },
+
+            async updateSessionLogout(sessionId, logoutTime) {
+                return new Promise((resolve, reject) => {
+                    const tx = this.db.transaction(this.stores.barista_sessions, 'readwrite');
+                    const store = tx.objectStore(this.stores.barista_sessions);
+                    const getRequest = store.get(sessionId);
+                    getRequest.onsuccess = () => {
+                        const session = getRequest.result;
+                        if (session) {
+                            session.logoutTime = logoutTime;
+                            store.put(session);
+                            resolve();
+                        } else {
+                            reject('Session not found');
+                        }
+                    };
+                    getRequest.onerror = () => reject(getRequest.error);
+                });
+            },
+
+            async getLastOpenSession(username) {
+                return new Promise((resolve, reject) => {
+                    const tx = this.db.transaction(this.stores.barista_sessions, 'readonly');
+                    const store = tx.objectStore(this.stores.barista_sessions);
+                    const index = store.index('username');
+                    const range = IDBKeyRange.only(username);
+                    const request = index.openCursor(range, 'prev'); // نريد آخر جلسة
+                    let lastSession = null;
+                    request.onsuccess = (event) => {
+                        const cursor = event.target.result;
+                        if (cursor) {
+                            if (!cursor.value.logoutTime) {
+                                lastSession = cursor.value;
+                            }
+                            cursor.continue();
+                        } else {
+                            resolve(lastSession);
+                        }
+                    };
+                    request.onerror = () => reject(request.error);
+                });
+            },
+
+            async getAllSessions() {
+                return new Promise((resolve, reject) => {
+                    const tx = this.db.transaction(this.stores.barista_sessions, 'readonly');
+                    const store = tx.objectStore(this.stores.barista_sessions);
+                    const request = store.getAll();
+                    request.onsuccess = () => resolve(request.result);
+                    request.onerror = () => reject(request.error);
+                });
             }
         };
 
@@ -1158,13 +1285,22 @@
             retryCount: 0,
             online: navigator.onLine,
             orderElements: new Map(),
-            currentRefreshInterval: CONFIG.REFRESH_INTERVAL
+            currentRefreshInterval: CONFIG.REFRESH_INTERVAL,
+            // بيانات المستخدم الحالي
+            currentUser: null,
+            currentSessionId: null
         };
 
+        // عناصر DOM
         const DOM = {
-            startup: document.getElementById('startup-screen'),
-            activateBtn: document.getElementById('activateBtn'),
+            loginScreen: document.getElementById('loginScreen'),
+            loginBtn: document.getElementById('loginBtn'),
+            loginUsername: document.getElementById('loginUsername'),
+            loginPassword: document.getElementById('loginPassword'),
+            loginError: document.getElementById('loginError'),
             mainContent: document.getElementById('main-content'),
+            logoutBtn: document.getElementById('logoutBtn'),
+            currentUserDisplay: document.getElementById('currentUserDisplay'),
             ordersContainer: document.getElementById('ordersContainer'),
             preparingCount: document.getElementById('preparingCount'),
             completedCount: document.getElementById('completedCount'),
@@ -1212,63 +1348,44 @@
             return extractNumber(order.total);
         }
 
-        // جلب قائمة المنتجات من API القائمة وتحديث BARISTA_KEYWORDS
+        // جلب قائمة المنتجات
         async function loadMenuAndUpdateKeywords() {
             try {
                 const response = await fetch(`${CONFIG.MENU_API_URL}?action=getMenuData&_=${Date.now()}`);
                 const data = await response.json();
                 if (data.success && data.categories && data.products) {
-                    // الحصول على معرفات الأقسام المطلوبة
                     const categoryIds = data.categories
                         .filter(cat => CONFIG.BARISTA_CATEGORY_NAMES.includes(cat.name.trim()))
                         .map(cat => cat.id);
-                    
                     if (categoryIds.length > 0) {
-                        // الحصول على جميع المنتجات في هذه الأقسام
                         const categoryProducts = data.products.filter(p => categoryIds.includes(p.categoryId));
-                        // استخراج أسماء المنتجات (مع تنظيف بسيط)
                         const productNames = categoryProducts.map(p => p.name.trim());
-                        // إزالة التكرار وتحديث القائمة
                         BARISTA_KEYWORDS = [...new Set(productNames)];
-                        console.log(`تم تحميل ${BARISTA_KEYWORDS.length} كلمة مفتاحية من الأقسام المحددة`);
-                    } else {
-                        console.warn(`لم يتم العثور على الأقسام المحددة، سيتم استخدام القائمة الافتراضية`);
+                        console.log(`تم تحميل ${BARISTA_KEYWORDS.length} كلمة مفتاحية`);
                     }
-                } else {
-                    throw new Error('Invalid menu data format');
                 }
             } catch (error) {
                 console.error('فشل تحميل قائمة المشروبات:', error);
-                // نترك القائمة الافتراضية كما هي
             }
         }
 
-        // دالة تصفية أصناف الباريستا (تعتمد على BARISTA_KEYWORDS المحدثة)
         function isBaristaItem(itemName) {
             if (!itemName) return false;
             const name = itemName.toString().toLowerCase().trim();
-            // إذا كانت القائمة الديناميكية تحتوي على أسماء، نستخدمها
             if (BARISTA_KEYWORDS.length > 0) {
                 return BARISTA_KEYWORDS.some(keyword => name.includes(keyword.toLowerCase()));
             }
-            // وإلا نستخدم القائمة الافتراضية كاحتياطي
             const defaultKeywords = [
-                // مشروبات ساخنة
                 'قهوة', 'قهوه', 'اسبرسو', 'أمريكانو', 'لاتيه', 'كابتشينو', 'سبانيش', 'كراميل', 'ميكياتو',
                 'موكا', 'شاي', 'بريق', 'هوت شوكليت', 'نسكافيه', 'ماتشا', 'روز', 'وايت',
-                // مشروبات باردة وقهوة باردة
                 'ايس', 'ميلك شيك', 'يوقرت', 'دراق', 'خوخ',
-                // موهيتو
                 'موهيتو', 'كلاسيك', 'حمضيات', 'مكس بيري', 'حامض حلو',
-                // سوفت درينك
                 'غازيه', 'ريد بول', 'كود ريد', 'بوم بوم', 'مياه',
-                // نكهات وإضافات
                 'نكهه', 'نكهة', 'بلو', 'بنك', 'قرين', 'فراوله', 'بلو بيري', 'اوريو', 'سنكرز', 'فانيلا', 'عربيه'
             ];
             return defaultKeywords.some(keyword => name.includes(keyword));
         }
 
-        // تطبيع وتصفية الطلبات بحيث تبقى فقط أصناف الباريستا
         function normalizeOrder(order) {
             let rawItems = order.items || order.Items || order.orderItems || [];
             return {
@@ -1304,7 +1421,7 @@
                 .filter(order => order.items.length > 0);
         }
 
-        // ======================== معالجة الطلبات والعرض ========================
+        // ======================== معالجة الطلبات ========================
         async function processOrders(orders, options = {}) {
             const filtered = filterOrders(orders);
             const oldOrders = KitchenState.orders;
@@ -1323,7 +1440,6 @@
                 KitchenState.initialLoad = false;
             }
             
-            // حفظ في IndexedDB
             try {
                 await DB.putOrders(filtered);
             } catch (e) {
@@ -1565,7 +1681,6 @@
             KitchenState.isLoading = true;
             DOM.refreshBtn.innerHTML = '<i class="fas fa-spinner spinner"></i>';
             
-            // تحديد آخر طابع زمني موجود
             let lastSync = 0;
             if (KitchenState.orders.length > 0) {
                 const timestamps = KitchenState.orders.map(o => new Date(o.timestamp).getTime());
@@ -1750,7 +1865,6 @@
                 filterCardsByStatus(KitchenState.currentStatus);
             }
             
-            // حفظ في IndexedDB
             try {
                 await DB.putOrders([order]);
             } catch (e) {
@@ -1781,14 +1895,12 @@
                 showEmptyState();
             }
             
-            // حذف من IndexedDB
             try {
                 await DB.deleteOrder(orderId);
             } catch (e) {
                 console.warn('فشل حذف من IndexedDB', e);
             }
             
-            // إرسال الحذف إلى الخادم
             try {
                 const formData = new URLSearchParams();
                 formData.append('action', 'deleteOrder');
@@ -1900,20 +2012,98 @@
             setTimeout(() => printWindow.print(), 500);
         };
 
+        // ======================== دوال تسجيل الدخول والجلسات ========================
+        async function handleLogin() {
+            const username = DOM.loginUsername.value.trim();
+            const password = DOM.loginPassword.value.trim();
+            
+            const user = CONFIG.USERS.find(u => u.username === username && u.password === password);
+            if (!user) {
+                DOM.loginError.style.display = 'block';
+                return;
+            }
+            
+            DOM.loginError.style.display = 'none';
+            
+            try {
+                // التأكد من أن قاعدة البيانات مهيأة
+                if (!DB.db) {
+                    await DB.init();
+                }
+                
+                // التحقق من وجود جلسة سابقة مفتوحة لنفس المستخدم
+                const lastOpenSession = await DB.getLastOpenSession(username);
+                if (lastOpenSession) {
+                    // إغلاق الجلسة القديمة تلقائياً (تم إغلاق المتصفح دون تسجيل خروج)
+                    await DB.updateSessionLogout(lastOpenSession.id, new Date().toISOString());
+                }
+                
+                // إنشاء جلسة جديدة
+                const session = {
+                    username: username,
+                    loginTime: new Date().toISOString(),
+                    logoutTime: null
+                };
+                const sessionId = await DB.addSession(session);
+                
+                KitchenState.currentUser = username;
+                KitchenState.currentSessionId = sessionId;
+                KitchenState.active = true;
+                
+                // إخفاء شاشة الدخول وإظهار المحتوى
+                DOM.loginScreen.classList.add('hidden');
+                DOM.mainContent.style.opacity = '1';
+                DOM.currentUserDisplay.textContent = username;
+                
+                // بدء تحميل البيانات
+                await initializeApp();
+                
+                showNotification(`مرحباً ${username} 👋`, 'success');
+            } catch (error) {
+                console.error('خطأ في تسجيل الدخول:', error);
+                showNotification('حدث خطأ في تسجيل الدخول، حاول مرة أخرى', 'error');
+            }
+        }
+
+        async function handleLogout() {
+            if (KitchenState.currentSessionId) {
+                // تحديث وقت الخروج
+                await DB.updateSessionLogout(KitchenState.currentSessionId, new Date().toISOString());
+                KitchenState.currentSessionId = null;
+            }
+            
+            // إيقاف المؤقتات
+            if (KitchenState.refreshInterval) {
+                clearInterval(KitchenState.refreshInterval);
+                KitchenState.refreshInterval = null;
+            }
+            stopAlertSound();
+            
+            KitchenState.active = false;
+            KitchenState.currentUser = null;
+            
+            // إخفاء المحتوى وإظهار شاشة الدخول
+            DOM.mainContent.style.opacity = '0';
+            DOM.loginScreen.classList.remove('hidden');
+            
+            // تفريغ الحقول
+            DOM.loginUsername.value = '';
+            DOM.loginPassword.value = '';
+            
+            showNotification('تم تسجيل الخروج بنجاح', 'info');
+        }
+
         // ======================== التهيئة وبدء التشغيل ========================
         async function initializeApp() {
             try {
-                await DB.init();
                 const orders = await DB.getAllOrders();
                 processOrders(orders, { initialLoad: true });
             } catch (error) {
                 console.error('فشل تهيئة IndexedDB، استخدام localStorage كاحتياطي', error);
-                loadFromLocalStorage(); // الرجوع للطريقة القديمة
+                loadFromLocalStorage();
             }
             
-            // تحميل قائمة المشروبات من API القائمة
             await loadMenuAndUpdateKeywords();
-            
             startAutoRefresh();
             startCleanupTask();
         }
@@ -1934,7 +2124,6 @@
             setInterval(async () => {
                 try {
                     await DB.clearOldOrders(CONFIG.OLD_DAYS_THRESHOLD);
-                    // تحديث القائمة المحلية بعد الحذف
                     const orders = await DB.getAllOrders();
                     processOrders(orders);
                     console.log('تم تنظيف الطلبات القديمة');
@@ -1942,30 +2131,6 @@
                     console.error('فشل تنظيف الطلبات القديمة', error);
                 }
             }, CONFIG.CLEANUP_INTERVAL);
-        }
-
-        function playTestSound() {
-            if (DOM.notificationSound && KitchenState.soundEnabled) {
-                DOM.notificationSound.volume = 0.3;
-                DOM.notificationSound.play()
-                    .then(() => {
-                        DOM.notificationSound.pause();
-                        DOM.notificationSound.currentTime = 0;
-                    })
-                    .catch(e => console.log('تحتاج النقر أولاً لتشغيل الصوت'));
-            }
-        }
-
-        function handleOnline() {
-            KitchenState.online = true;
-            showNotification('📶 تم استعادة الاتصال بالإنترنت', 'success');
-            KitchenState.currentRefreshInterval = CONFIG.REFRESH_INTERVAL;
-            loadOrdersWithRetry();
-        }
-
-        function handleOffline() {
-            KitchenState.online = false;
-            showNotification('⚠️ انقطع الاتصال بالإنترنت، يتم عرض الطلبات المخزنة', 'error');
         }
 
         function showNotification(message, type = 'info') {
@@ -1977,22 +2142,27 @@
             setTimeout(() => notification.remove(), 3000);
         }
 
+        // ======================== تهيئة IndexedDB قبل تمكين زر الدخول ========================
+        (async function init() {
+            try {
+                await DB.init();
+                console.log('IndexedDB initialized');
+                // يمكننا تمكين الزر إذا أردنا
+            } catch (error) {
+                console.error('فشل تهيئة IndexedDB:', error);
+                showNotification('تعذر الاتصال بقاعدة البيانات المحلية', 'error');
+            }
+        })();
+
         // ======================== ربط الأحداث ========================
-        DOM.activateBtn.addEventListener('click', async () => {
-            KitchenState.active = true;
-            KitchenState.initialLoad = true;
-            DOM.startup.classList.add('hidden');
-            DOM.mainContent.style.opacity = '1';
-            
-            playTestSound();
-            
-            await initializeApp(); // تهيئة IndexedDB وجلب الطلبات
-            
-            window.addEventListener('online', handleOnline);
-            window.addEventListener('offline', handleOffline);
-            
-            showNotification('✅ تم تشغيل شاشة الباريستا', 'success');
+        DOM.loginBtn.addEventListener('click', handleLogin);
+        DOM.loginUsername.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleLogin();
         });
+        DOM.loginPassword.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleLogin();
+        });
+        DOM.logoutBtn.addEventListener('click', handleLogout);
 
         DOM.soundToggle.addEventListener('click', () => {
             KitchenState.soundEnabled = !KitchenState.soundEnabled;
@@ -2029,7 +2199,6 @@
             const order = KitchenState.orders.find(o => o.orderId === orderId);
             
             if (order) {
-                // لا حاجة لتغيير الحالة، هو أصلاً preparing
                 updateStats();
                 
                 const card = KitchenState.orderElements.get(orderId);
@@ -2041,7 +2210,6 @@
                     filterCardsByStatus(KitchenState.currentStatus);
                 }
                 
-                // حفظ في IndexedDB
                 DB.putOrders([order]).catch(e => console.warn('فشل حفظ بعد الاستلام', e));
             }
             
